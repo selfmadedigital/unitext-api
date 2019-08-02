@@ -1,7 +1,7 @@
 {
-    "name": "laravel/lumen",
-    "description": "The Laravel Lumen Framework.",
-    "keywords": ["framework", "laravel", "lumen"],
+    "name": "unitext/api",
+    "description": "Unitext backend CMS",
+    "keywords": ["unitext"],
     "license": "MIT",
     "type": "project",
     "require": {

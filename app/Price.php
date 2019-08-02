@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class User extends Model
+class Price extends Model
 {
 
     /**
@@ -13,7 +13,7 @@ class User extends Model
      * @var array
      */
     protected $fillable = [
-        'username', 'password', 'first_name', 'last_name', 'token'
+        'lang', 'title', 'subtitle','content','price'
     ];
 
     /**

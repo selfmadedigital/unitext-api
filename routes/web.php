@@ -15,14 +15,30 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
-$router->group(['prefix' => 'api', 'middleware' => 'auth'], function () use ($router) {
-  $router->get('authors',  ['uses' => 'AuthorController@showAllAuthors']);
+$router->group(['prefix' => 'api'], function () use ($router) {
+  $router->get('contact',  ['uses' => 'ContactController@getContacts']);
+  $router->put('contact/{id}', ['uses' => 'ContactController@update']);
 
-  $router->get('authors/{id}', ['uses' => 'AuthorController@showOneAuthor']);
+  $router->get('content',  ['uses' => 'ContentController@getContent']);
+  $router->put('content/{id}', ['uses' => 'ContentController@update']);
 
-  $router->post('authors', ['uses' => 'AuthorController@create']);
+  $router->get('menu',  ['uses' => 'MenuController@getMenu']);
+  $router->put('menu/{id}', ['uses' => 'MenuController@update']);
 
-  $router->delete('authors/{id}', ['uses' => 'AuthorController@delete']);
+  $router->get('partner',  ['uses' => 'PartnerController@getPartners']);
+  $router->put('partner/{id}', ['uses' => 'PartnerController@update']);
+  $router->post('partner',  ['uses' => 'PartnerController@create']);
+  $router->delete('partner',  ['uses' => 'PartnerController@delete']);
 
-  $router->put('authors/{id}', ['uses' => 'AuthorController@update']);
+  $router->get('price',  ['uses' => 'PriceController@getPrices']);
+  $router->put('price/{id}', ['uses' => 'PriceController@update']);
+
+  $router->get('review',  ['uses' => 'ReviewController@getReviews']);
+  $router->put('review/{id}', ['uses' => 'ReviewController@update']);
+  $router->post('review',  ['uses' => 'ReviewController@create']);
+
+  $router->get('service',  ['uses' => 'ServiceController@getServices']);
+  $router->put('service/{id}', ['uses' => 'ServiceController@update']);
+
+  $router->post('user', ['uses' => 'UserController@authenticate']);
 });

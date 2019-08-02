@@ -35,9 +35,9 @@ class Auth0Middleware
     {
         try {
             $verifier = new JWTVerifier([
-              'supported_algs' => ['RS256'],
-              'valid_audiences' => ['YOUR AUTH0_API_AUDIENCE'],
-              'authorized_iss' => ['YOUR_AUTH0_DOMAIN']
+                'valid_audiences' => ['https://api.unitext.sk'],
+                'client_id' => '2kLMGHnhWqNGICSKgZbUnK0UnqhIaMqd',
+                'client_secret' => '01HksOQxbLDWc8qnYJTp2ogQF0gIZuNyq0W922RTkLFfathZOyLex0knEkMRAtpR'
             ]);
 
             $decoded = $verifier->verifyAndDecode($token);

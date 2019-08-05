@@ -43,7 +43,7 @@ class AuthController extends BaseController
         return JWT::encode($payload, env('JWT_SECRET'));
     }
 
-    public function updatePassword(User $user)
+    public function updatePassword(Request $request)
     {
         $this->validate($this->request, [
             'username'     => 'required',
@@ -61,12 +61,32 @@ class AuthController extends BaseController
             ], 400);
         }
 
-        if (Hash::check($this->request->input('password'), $user->password)) {
-            $user->update(["password" => Hash::make($this->request->input('newPassword'))]);
-        }
-
+        $user->update(["password" => Hash::make($this->request->input('password'))]);
         return response()->json($user, 200);
     }
+
+    public function checkPassword(Request $request) {
+        $this->validate($this->request, [
+            'username'     => 'required',
+            'password'  => 'required'
+        ]);
+
+        // Find the user by email
+        $user = User::where('username', $this->request->input('username'))->first();
+        if (!$user) {
+            // You wil probably have some sort of helpers or whatever
+            // to make sure that you have the same response format for
+            // differents kind of responses. But let's return the
+            // below respose for now.
+            return response()->json([
+                'error' => 'Username does not exist.'
+            ], 400);
+        }
+        return response()->json([
+            'valid' => Hash::check($this->request->input('password'), $user->password),
+        ], 200);
+    }
+
     /**
      * Authenticate a user and return the token if the provided credentials are correct.
      *
@@ -92,7 +112,7 @@ class AuthController extends BaseController
         }
         if (Hash::check($this->request->input('password'), $user->password)) {
             return response()->json([
-                'username' => $user->first_name." ".$user->last_name,
+                'username' => $user->username,
                 'token' => $this->jwt($user)
             ], 200);
         }

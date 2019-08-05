@@ -42,4 +42,5 @@ $router->group(['middleware' => 'jwt.auth','prefix' => 'api'], function() use ($
 });
 
 $router->post('auth/login', ['uses' => 'AuthController@authenticate']);
-$router->post('auth/changepass', ['uses' => 'AuthController@updatePassword']);
+$router->post('auth/password', ['uses' => 'AuthController@checkPassword']);
+$router->put('auth/password', ['uses' => 'AuthController@updatePassword']);

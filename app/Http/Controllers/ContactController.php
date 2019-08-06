@@ -14,10 +14,6 @@ class ContactController extends Controller
 
     public function update($id, Request $request)
     {
-        $this->validate($request, [
-            'value' => 'required',
-        ]);
-
         $contact = Contact::findOrFail($id);
         $contact->update($request->all());
 

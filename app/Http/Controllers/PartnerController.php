@@ -27,9 +27,7 @@ class PartnerController extends Controller
     public function create(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required',
-            'href' => 'required',
-            'sort' => 'required'
+            'image' => 'required',
         ]);
 
         $partner = Partner::create($request->all());
@@ -39,6 +37,6 @@ class PartnerController extends Controller
     public function delete($id)
     {
         Partner::findOrFail($id)->delete();
-        return response('Deleted Successfully', 200);
+        return response()->json(['status' => 'ok'], 200);
     }
 }

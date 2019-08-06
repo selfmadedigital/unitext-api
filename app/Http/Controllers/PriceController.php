@@ -16,8 +16,6 @@ class PriceController extends Controller
     {
         $this->validate($request, [
             'title' => 'required',
-            'subtitle' => 'required',
-            'content' => 'required',
             'price' => 'required',
         ]);
 

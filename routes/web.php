@@ -24,7 +24,7 @@ $router->group(['middleware' => 'jwt.auth','prefix' => 'api'], function() use ($
   $router->get('partner',  ['uses' => 'PartnerController@getPartners']);
   $router->put('partner/{id}', ['uses' => 'PartnerController@update']);
   $router->post('partner',  ['uses' => 'PartnerController@create']);
-  $router->delete('partner',  ['uses' => 'PartnerController@delete']);
+  $router->delete('partner/{id}',  ['uses' => 'PartnerController@delete']);
 
   $router->get('price',  ['uses' => 'PriceController@getPrices']);
   $router->put('price/{id}', ['uses' => 'PriceController@update']);

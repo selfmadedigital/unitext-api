@@ -21,14 +21,15 @@ class ReviewController extends Controller
 
         $review = Review::findOrFail($id);
         $review->update($request->all());
-
+        var_dump($request);
         return response()->json($review, 200);
     }
 
     public function create(Request $request)
     {
         $this->validate($request, [
-            'allowed' => 'required',
+            'user' => 'required',
+            'text' => 'required',
         ]);
 
         $review = Review::create($request->all());

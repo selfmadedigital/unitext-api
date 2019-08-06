@@ -4,7 +4,6 @@ use Validator;
 use App\User;
 use Firebase\JWT\JWT;
 use Illuminate\Http\Request;
-use Firebase\JWT\ExpiredException;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Lumen\Routing\Controller as BaseController;
 class AuthController extends BaseController
@@ -35,7 +34,7 @@ class AuthController extends BaseController
             'iss' => "lumen-jwt", // Issuer of the token
             'sub' => $user->id, // Subject of the token
             'iat' => time(), // Time when JWT was issued.
-            'exp' => time() + 60*60 // Expiration time
+            'exp' => time() + 180*60 // Expiration time
         ];
 
         // As you can see we are passing `JWT_SECRET` as the second parameter that will
@@ -57,34 +56,12 @@ class AuthController extends BaseController
             // differents kind of responses. But let's return the
             // below respose for now.
             return response()->json([
-                'error' => 'Username does not exist.'
+                'error' => 'Užívateľ neexistuje!'
             ], 400);
         }
 
         $user->update(["password" => Hash::make($this->request->input('password'))]);
         return response()->json($user, 200);
-    }
-
-    public function checkPassword(Request $request) {
-        $this->validate($this->request, [
-            'username'     => 'required',
-            'password'  => 'required'
-        ]);
-
-        // Find the user by email
-        $user = User::where('username', $this->request->input('username'))->first();
-        if (!$user) {
-            // You wil probably have some sort of helpers or whatever
-            // to make sure that you have the same response format for
-            // differents kind of responses. But let's return the
-            // below respose for now.
-            return response()->json([
-                'error' => 'Username does not exist.'
-            ], 400);
-        }
-        return response()->json([
-            'valid' => Hash::check($this->request->input('password'), $user->password),
-        ], 200);
     }
 
     /**
@@ -107,18 +84,19 @@ class AuthController extends BaseController
             // differents kind of responses. But let's return the
             // below respose for now.
             return response()->json([
-                'error' => 'Username does not exist.'
+                'error' => 'Užívateľ neexistuje!'
             ], 400);
         }
         if (Hash::check($this->request->input('password'), $user->password)) {
             return response()->json([
                 'username' => $user->username,
+                'realname' => $user->first_name.' '.$user->last_name,
                 'token' => $this->jwt($user)
             ], 200);
         }
         // Bad Request response
         return response()->json([
-            'error' => 'Username or password is wrong.'
+            'error' => 'Nesprávne meno alebo heslo!'
         ], 400);
     }
 }

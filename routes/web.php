@@ -11,10 +11,6 @@
 |
 */
 
-$router->get('/', function () use ($router) {
-    return $router->app->version();
-});
-
 $router->group(['middleware' => 'jwt.auth','prefix' => 'api'], function() use ($router) {
   $router->get('contact',  ['uses' => 'ContactController@getContacts']);
   $router->put('contact/{id}', ['uses' => 'ContactController@update']);
@@ -39,8 +35,9 @@ $router->group(['middleware' => 'jwt.auth','prefix' => 'api'], function() use ($
 
   $router->get('service',  ['uses' => 'ServiceController@getServices']);
   $router->put('service/{id}', ['uses' => 'ServiceController@update']);
+
+  $router->post('upload',  ['uses' => 'UploadController@upload']);
 });
 
 $router->post('auth/login', ['uses' => 'AuthController@authenticate']);
-$router->post('auth/password', ['uses' => 'AuthController@checkPassword']);
-$router->put('auth/password', ['uses' => 'AuthController@updatePassword']);
+$router->put('auth/password', ['middleware' => 'jwt.auth', 'uses' => 'AuthController@updatePassword']);

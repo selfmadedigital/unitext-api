@@ -14,7 +14,7 @@ class BlogController extends Controller
 
     public function getArticle($id, Request $request)
     {
-        return response()->json(Blog::where('id', $this->request->input('id'))->first());
+        return response()->json(Blog::where('id', $id)->first());
     }
 
     public function update($id, Request $request)

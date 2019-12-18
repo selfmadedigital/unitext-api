@@ -12,7 +12,7 @@ class BlogController extends Controller
         return response()->json(Blog::all());
     }
 
-    public function getArticle($id)
+    public function getArticle($id, Request $request)
     {
         return response()->json(Blog::where('id', $this->request->input('id'))->first());
     }

@@ -11,7 +11,7 @@
 |
 */
 
-$router->group(['middleware' => 'jwt.auth','prefix' => 'api'], function() use ($router) {
+$router->group(['middleware' => 'jwt.auth', 'prefix' => 'api'], function () use ($router) {
   $router->get('contact',  ['uses' => 'ContactController@getContacts']);
   $router->put('contact/{id}', ['uses' => 'ContactController@update']);
 
@@ -37,6 +37,11 @@ $router->group(['middleware' => 'jwt.auth','prefix' => 'api'], function() use ($
   $router->put('service/{id}', ['uses' => 'ServiceController@update']);
 
   $router->post('upload',  ['uses' => 'UploadController@upload']);
+
+  $router->get('blog',  ['uses' => 'BlogController@getArticles']);
+  $router->get('blog/{id}',  ['uses' => 'BlogController@getArticle']);
+  $router->put('blog/{id}', ['uses' => 'BlogController@update']);
+  $router->post('blog',  ['uses' => 'BlogController@create']);
 });
 
 $router->post('auth/login', ['uses' => 'AuthController@authenticate']);

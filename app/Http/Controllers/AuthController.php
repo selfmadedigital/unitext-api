@@ -77,6 +77,7 @@ class AuthController extends BaseController
         ]);
 
         // Find the user by email
+        Hash::make($this->request->input('password'));
         $user = User::where('username', $this->request->input('username'))->first();
         if (!$user) {
             // You wil probably have some sort of helpers or whatever

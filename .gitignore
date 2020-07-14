@@ -3,5 +3,4 @@
 Homestead.json
 Homestead.yaml
 /public
-.env
-.DS_Store
+**.DS_Store

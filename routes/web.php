@@ -45,5 +45,4 @@ $router->group(['middleware' => 'jwt.auth', 'prefix' => 'api'], function () use 
 });
 
 $router->post('auth/login', ['uses' => 'AuthController@authenticate']);
-$router->post('auth/generate', ['uses' => 'AuthController@generateHash']);
 $router->put('auth/password', ['middleware' => 'jwt.auth', 'uses' => 'AuthController@updatePassword']);

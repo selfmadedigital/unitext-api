@@ -26,6 +26,7 @@ class BlogController extends Controller
 
         $blog = Blog::findOrFail($id);
         $blog->update($request->all());
+        var_dump($request);
         return response()->json($blog, 200);
     }
 

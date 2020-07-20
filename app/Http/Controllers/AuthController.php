@@ -1,14 +1,11 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use Validator;
 use App\User;
 use Firebase\JWT\JWT;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Lumen\Routing\Controller as BaseController;
-
 class AuthController extends BaseController
 {
     /**
@@ -23,8 +20,7 @@ class AuthController extends BaseController
      * @param  \Illuminate\Http\Request  $request
      * @return void
      */
-    public function __construct(Request $request)
-    {
+    public function __construct(Request $request) {
         $this->request = $request;
     }
     /**
@@ -33,13 +29,12 @@ class AuthController extends BaseController
      * @param  \App\User   $user
      * @return string
      */
-    protected function jwt(User $user)
-    {
+    protected function jwt(User $user) {
         $payload = [
             'iss' => "lumen-jwt", // Issuer of the token
             'sub' => $user->id, // Subject of the token
             'iat' => time(), // Time when JWT was issued.
-            'exp' => time() + 180 * 60 // Expiration time
+            'exp' => time() + 180*60 // Expiration time
         ];
 
         // As you can see we are passing `JWT_SECRET` as the second parameter that will
@@ -75,8 +70,7 @@ class AuthController extends BaseController
      * @param  \App\User   $user
      * @return mixed
      */
-    public function authenticate(Request $request)
-    {
+    public function authenticate(Request $request) {
         $this->validate($this->request, [
             'username'     => 'required',
             'password'  => 'required'
@@ -97,7 +91,7 @@ class AuthController extends BaseController
         if (Hash::check($this->request->input('password'), $user->password)) {
             return response()->json([
                 'username' => $user->username,
-                'realname' => $user->first_name . ' ' . $user->last_name,
+                'realname' => $user->first_name.' '.$user->last_name,
                 'token' => $this->jwt($user)
             ], 200);
         }
@@ -105,16 +99,5 @@ class AuthController extends BaseController
         return response()->json([
             'error' => 'Nesprávne meno alebo heslo!'
         ], 400);
-    }
-
-    public function generateHash(Request $request)
-    {
-        $this->validate($this->request, [
-            'password'  => 'required'
-        ]);
-
-        return response()->json([
-            'hash' => Hash::make($this->request->input('password'))
-        ], 200);
     }
 }
